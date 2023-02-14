@@ -40,6 +40,23 @@ public class AuthenticationController {
 
     }
 
+    @PostMapping("/registerAdmin")
+    public ResponseEntity<AuthenticationResponse> registerAdmin(
+            @RequestBody RegisterRequest request
+    ){
+        Optional<User> user = userRepository.findByUsername(request.getUsername());
+        if(user.toString() == "Optional.empty"){
+            return ResponseEntity.ok(authenticationService.registerAdmin(request));
+        } else {
+            final AuthenticationResponse response = AuthenticationResponse.builder()
+                    .status("Error, Username already exist")
+                    .token("null")
+                    .build();
+            return ResponseEntity.ok(response);
+        }
+
+    }
+
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody LoginRequest request
