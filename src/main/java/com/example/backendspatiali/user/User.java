@@ -1,6 +1,7 @@
 package com.example.backendspatiali.user;
 
 
+import com.example.backendspatiali.spatialData.data.SpatialData;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @Builder
@@ -29,6 +28,16 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "spatial_data",
+            joinColumns = { @JoinColumn(name = "employee_id") },
+            inverseJoinColumns = { @JoinColumn(name = "car_id") })
+    private Set<SpatialData> spatial_data = new HashSet<>();
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
