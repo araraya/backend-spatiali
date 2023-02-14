@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 
 @Builder
@@ -21,7 +22,7 @@ import java.util.List;
 public abstract class User implements UserDetails {
     @Id
     @GeneratedValue
-    private Integer userId;
+    private UUID userId;
     private String username;
     private String email;
     private String password;
