@@ -7,14 +7,15 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.geolatte.geom.Geometry;
+import org.wololo.geojson.Feature;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "spatial_data")
 public class SpatialData {
     @Id
     @GeneratedValue
@@ -28,7 +29,7 @@ public class SpatialData {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },
-            mappedBy = "spatial_data")
+            mappedBy = "spatial_datas")
     @JsonIgnore
     private Set<User> userId = new HashSet<>();
 

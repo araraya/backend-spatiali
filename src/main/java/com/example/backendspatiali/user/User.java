@@ -33,10 +33,10 @@ public class User implements UserDetails {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
-    @JoinTable(name = "spatial_data",
-            joinColumns = { @JoinColumn(name = "employee_id") },
-            inverseJoinColumns = { @JoinColumn(name = "car_id") })
-    private Set<SpatialData> spatial_data = new HashSet<>();
+    @JoinTable(name = "spatial_datas",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "spatial_data_id") })
+    private Set<SpatialData> spatial_datas = new HashSet<>();
 
 
     @Override

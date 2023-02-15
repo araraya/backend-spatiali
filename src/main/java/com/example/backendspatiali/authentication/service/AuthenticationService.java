@@ -36,6 +36,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .status("Register Success")
+                .userId(user.getUserId())
                 .token(jwtToken)
                 .build();
     }
@@ -51,6 +52,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .status("Register Admin Success")
+                .userId(user.getUserId())
                 .token(jwtToken)
                 .build();
     }
@@ -68,6 +70,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .status("Login success")
+                .userId(user.getUserId())
                 .token(jwtToken)
                 .build();
     }
