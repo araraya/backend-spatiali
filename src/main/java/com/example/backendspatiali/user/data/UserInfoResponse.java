@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.spatial.Spatial;
-import org.wololo.geojson.Feature;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 @Data

@@ -2,7 +2,6 @@ package com.example.backendspatiali.user.service;
 
 import com.example.backendspatiali.user.data.UserInfoResponse;
 import com.example.backendspatiali.user.repository.UserRepository;
-import org.geolatte.geom.Feature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
