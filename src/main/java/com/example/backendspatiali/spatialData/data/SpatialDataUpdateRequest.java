@@ -4,15 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.json.JSONObject;
+import org.wololo.geojson.Feature;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class GeojsonResponse {
-
-    private String type;
-    private Object properties;
-    private Object geometry;
+public class SpatialDataUpdateRequest {
+    private Long id;
+    private Feature feature;
 }

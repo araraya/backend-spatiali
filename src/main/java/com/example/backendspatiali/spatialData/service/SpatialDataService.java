@@ -3,6 +3,7 @@ package com.example.backendspatiali.spatialData.service;
 
 import com.example.backendspatiali.spatialData.data.ResponseProjection;
 import com.example.backendspatiali.spatialData.data.SpatialDataRequest;
+import com.example.backendspatiali.spatialData.data.SpatialDataUpdateRequest;
 import com.example.backendspatiali.spatialData.repository.SpatialDataRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +28,16 @@ public class SpatialDataService {
     public List<ResponseProjection> getUserSpatialData(UUID userId){
         return spatialDataRepository.getUserSpatialData(userId);
 
+    }
+
+    public void deleteSpatialData(Long id) {
+        spatialDataRepository.deleteById(id);
+    }
+
+    public void updateSpatialData(SpatialDataUpdateRequest spatialDataUpdateRequest) {
+        var id = spatialDataUpdateRequest.getId();
+        var properties = spatialDataUpdateRequest.getFeature().getProperties();
+        var geometry = spatialDataUpdateRequest.getFeature().getGeometry();
+        spatialDataRepository.updateSpatialData(id, String.valueOf(properties), String.valueOf(geometry));
     }
 }

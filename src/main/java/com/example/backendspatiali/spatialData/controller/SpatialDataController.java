@@ -1,20 +1,18 @@
 package com.example.backendspatiali.spatialData.controller;
 
 
-import com.example.backendspatiali.spatialData.data.GeojsonResponse;
-import com.example.backendspatiali.spatialData.data.Geometry;
 import com.example.backendspatiali.spatialData.data.ResponseProjection;
+import com.example.backendspatiali.spatialData.data.SpatialData;
 import com.example.backendspatiali.spatialData.data.SpatialDataRequest;
+import com.example.backendspatiali.spatialData.data.SpatialDataUpdateRequest;
 import com.example.backendspatiali.spatialData.repository.SpatialDataRepository;
 import com.example.backendspatiali.spatialData.service.SpatialDataService;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.wololo.geojson.Feature;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,9 +20,6 @@ import java.util.UUID;
 public class SpatialDataController {
     @Autowired
     SpatialDataService spatialDataService;
-    @Autowired
-    private SpatialDataRepository spatialDataRepository;
-    private JavaType Geometry;
 
     @PostMapping("/addSpatialData")
     public void addSpatialData(@RequestBody SpatialDataRequest spatialDataRequest){
@@ -33,7 +28,18 @@ public class SpatialDataController {
 
     @GetMapping("/getUserSpatialData/{userId}")
     public List<ResponseProjection> getUserSpatialData(@PathVariable("userId") UUID userId){
-        return spatialDataRepository.getUserSpatialData(userId);
+        return spatialDataService.getUserSpatialData(userId);
     }
 
+    @DeleteMapping("/deleteSpatialData/{id}")
+    public ResponseEntity<String> deleteSpatialData(@PathVariable("id") Long id){
+        spatialDataService.deleteSpatialData(id);
+      return ResponseEntity.ok("Deleted");
+    }
+
+    @PutMapping("/updateSpatialData")
+    public ResponseEntity<String> updateSpatialData(@RequestBody SpatialDataUpdateRequest spatialDataUpdateRequest){
+        spatialDataService.updateSpatialData(spatialDataUpdateRequest);
+        return ResponseEntity.ok("Updated");
+    }
 }
