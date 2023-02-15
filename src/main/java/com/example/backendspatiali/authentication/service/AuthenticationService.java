@@ -5,14 +5,13 @@ import com.example.backendspatiali.authentication.data.AuthenticationResponse;
 import com.example.backendspatiali.authentication.data.LoginRequest;
 import com.example.backendspatiali.authentication.data.RegisterRequest;
 import com.example.backendspatiali.config.JwtService;
-import com.example.backendspatiali.user.Role;
-import com.example.backendspatiali.user.User;
-import com.example.backendspatiali.user.UserRepository;
+import com.example.backendspatiali.user.data.Role;
+import com.example.backendspatiali.user.data.User;
+import com.example.backendspatiali.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service

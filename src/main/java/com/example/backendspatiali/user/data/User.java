@@ -1,4 +1,4 @@
-package com.example.backendspatiali.user;
+package com.example.backendspatiali.user.data;
 
 
 import com.example.backendspatiali.spatialData.data.SpatialData;

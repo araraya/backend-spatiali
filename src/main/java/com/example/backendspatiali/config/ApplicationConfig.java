@@ -1,6 +1,6 @@
 package com.example.backendspatiali.config;
 
-import com.example.backendspatiali.user.UserRepository;
+import com.example.backendspatiali.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

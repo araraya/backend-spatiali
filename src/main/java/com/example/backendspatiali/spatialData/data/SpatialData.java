@@ -1,13 +1,12 @@
 package com.example.backendspatiali.spatialData.data;
 
 
-import com.example.backendspatiali.user.User;
+import com.example.backendspatiali.user.data.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.geolatte.geom.Geometry;
-import org.wololo.geojson.Feature;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,8 +19,7 @@ public class SpatialData {
     @Id
     @GeneratedValue
     private Long id;
-
-
+    private String type = "Feature";
     private String properties;
     private Geometry geometry;
     @ManyToMany(fetch = FetchType.LAZY,

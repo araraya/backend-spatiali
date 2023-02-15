@@ -1,7 +1,7 @@
-package com.example.backendspatiali.user;
+package com.example.backendspatiali.user.repository;
 
+import com.example.backendspatiali.user.data.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.ListCrudRepository;
 
 import java.util.Optional;
 import java.util.UUID;
