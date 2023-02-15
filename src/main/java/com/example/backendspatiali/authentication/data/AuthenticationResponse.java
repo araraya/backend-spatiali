@@ -14,6 +14,5 @@ import java.util.UUID;
 @Builder
 public class AuthenticationResponse {
     private String status;
-    private UUID userId;
     private String token;
 }

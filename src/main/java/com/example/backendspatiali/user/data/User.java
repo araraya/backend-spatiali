@@ -28,15 +28,6 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "spatial_datas",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "spatial_data_id") })
-    private Set<SpatialData> spatial_datas = new HashSet<>();
 
 
     @Override

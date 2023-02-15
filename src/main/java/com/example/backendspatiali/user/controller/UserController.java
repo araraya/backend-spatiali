@@ -2,7 +2,6 @@ package com.example.backendspatiali.user.controller;
 
 import com.example.backendspatiali.user.data.User;
 import com.example.backendspatiali.user.data.UserInfoResponse;
-import com.example.backendspatiali.user.repository.UserRepository;
 import com.example.backendspatiali.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/GetUserInfo/{userId}")
-    public ResponseEntity<UserInfoResponse> getUserInfo(@PathVariable("userId") UUID userId){
-    return ResponseEntity.ok(userService.getUserInfo(userId));
+    @GetMapping("/GetUserInfo/{username}")
+    public ResponseEntity<UserInfoResponse> getUserInfo(@PathVariable("username") String username){
+    return ResponseEntity.ok(userService.getUserInfo(username));
     }
 }

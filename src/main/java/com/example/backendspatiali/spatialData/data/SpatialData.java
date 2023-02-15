@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "spatial_data")
@@ -28,13 +28,6 @@ public class SpatialData {
     private String properties;
     @Column(name="geometry", columnDefinition = "Geometry")
     private Geometry geometry;
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
-            mappedBy = "spatial_datas")
-    @JsonIgnore
-    private Set<User> userId = new HashSet<>();
+    private UUID userId;
 
 }

@@ -1,19 +1,20 @@
-package com.example.backendspatiali.user.data;
+package com.example.backendspatiali.spatialData.data;
 
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.wololo.geojson.Feature;
 
+import java.awt.*;
 import java.util.UUID;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfoResponse {
+@Builder
+public class SpatialDataRequest {
     private UUID userId;
-    private String username;
-    private String role;
+    private Feature geojson;
 }
