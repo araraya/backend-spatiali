@@ -23,7 +23,7 @@ public class RefreshTokenService {
     }
 
     public Boolean gotRefreshToken(String username){
-        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUsername(username);
+        RefreshToken refreshToken = refreshTokenRepository.findByUsername(username).orElseThrow();
         if(refreshToken != null){
             return true;
         } else {
