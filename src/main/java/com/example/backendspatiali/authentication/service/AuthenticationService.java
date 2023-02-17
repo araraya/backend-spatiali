@@ -11,6 +11,7 @@ import com.example.backendspatiali.user.data.Role;
 import com.example.backendspatiali.user.data.User;
 import com.example.backendspatiali.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -72,6 +73,7 @@ public class AuthenticationService {
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(user);
+        refreshTokenService.generateNewRefreshToken(user.getUsername());
 
         return AuthenticationResponse.builder()
                 .status("Login success")
@@ -79,4 +81,20 @@ public class AuthenticationService {
                 .build();
     }
 
+    public AuthenticationResponse generateNewToken(LoginRequest request) {
+        boolean checkRefreshToken = refreshTokenService.gotRefreshToken(request.getUsername());
+        if(checkRefreshToken){
+            var user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+            var jwtToken = jwtService.generateToken(user);
+            return AuthenticationResponse.builder()
+                    .status("Renew JWT success")
+                    .token(jwtToken)
+                    .build();
+        }
+        else{
+            return AuthenticationResponse.builder()
+                    .status("Failed to generate new JWT")
+                    .build();
+        }
+    }
 }

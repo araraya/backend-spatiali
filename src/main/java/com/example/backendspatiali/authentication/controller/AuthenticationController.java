@@ -9,10 +9,7 @@ import com.example.backendspatiali.user.data.User;
 import com.example.backendspatiali.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -62,5 +59,10 @@ public class AuthenticationController {
             @RequestBody LoginRequest request
     ){
         return ResponseEntity.ok(authenticationService.login(request));
+    }
+
+    @GetMapping("/generateNewToken")
+    public ResponseEntity<AuthenticationResponse> generateNewToken(@RequestBody LoginRequest request){
+        return ResponseEntity.ok(authenticationService.generateNewToken(request));
     }
 }

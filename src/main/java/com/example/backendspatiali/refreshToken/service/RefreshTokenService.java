@@ -6,19 +6,24 @@ import com.example.backendspatiali.refreshToken.repository.RefreshTokenRepositor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class RefreshTokenService {
     @Autowired
     RefreshTokenRepository refreshTokenRepository;
 
     public void generateNewRefreshToken(String username){
-        RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUsername(username);
-        refreshTokenRepository.save(refreshToken);
+        var token =  RefreshToken.builder()
+                        .refreshToken(UUID.randomUUID())
+                        .username(username)
+                                .build();
+        refreshTokenRepository.save(token);
     }
 
     public Boolean gotRefreshToken(String username){
-        RefreshToken refreshToken = refreshTokenRepository.findByUsername(username).orElseThrow();
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUsername(username);
         if(refreshToken != null){
             return true;
         } else {
