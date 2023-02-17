@@ -1,12 +1,12 @@
 package com.example.backendspatiali;
 
-import com.example.backendspatiali.config.JwtSecretProperties;
+import com.example.backendspatiali.config.SecretsProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
-@EnableConfigurationProperties(JwtSecretProperties.class)
+@EnableConfigurationProperties(SecretsProperties.class)
 public class BackendSpatialiApplication {
 
 	public static void main(String[] args) {

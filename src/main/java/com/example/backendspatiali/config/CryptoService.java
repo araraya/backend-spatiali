@@ -14,7 +14,7 @@ import java.util.Base64;
 public class CryptoService {
     private static SecretKeySpec secretKey;
     private static byte[] key;
-    private static final String ALGORITHM = "AES/GCM/NoPadding";
+    private static final String ALGORITHM = "AES";
 
     public void prepareSecreteKey(String myKey) {
         MessageDigest sha = null;
@@ -24,6 +24,7 @@ public class CryptoService {
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16);
             secretKey = new SecretKeySpec(key, ALGORITHM);
+//            System.out.println(secretKey.getEncoded().toString());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

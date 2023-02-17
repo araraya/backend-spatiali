@@ -1,10 +1,7 @@
 package com.example.backendspatiali.spatialData.controller;
 
 
-import com.example.backendspatiali.spatialData.data.ResponseProjection;
-import com.example.backendspatiali.spatialData.data.SpatialData;
-import com.example.backendspatiali.spatialData.data.SpatialDataRequest;
-import com.example.backendspatiali.spatialData.data.SpatialDataUpdateRequest;
+import com.example.backendspatiali.spatialData.data.*;
 import com.example.backendspatiali.spatialData.repository.SpatialDataRepository;
 import com.example.backendspatiali.spatialData.service.SpatialDataService;
 import com.fasterxml.jackson.databind.JavaType;
@@ -27,7 +24,7 @@ public class SpatialDataController {
     }
 
     @GetMapping("/getUserSpatialData/{userId}")
-    public List<ResponseProjection> getUserSpatialData(@PathVariable("userId") UUID userId){
+    public List<UserSpatialResponse> getUserSpatialData(@PathVariable("userId") UUID userId){
         return spatialDataService.getUserSpatialData(userId);
     }
 

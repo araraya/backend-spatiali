@@ -17,10 +17,10 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private final JwtSecretProperties jwtSecretProperties;
+    private final SecretsProperties secretsProperties;
 
-    public JwtService(JwtSecretProperties jwtSecretProperties) {
-        this.jwtSecretProperties = jwtSecretProperties;
+    public JwtService(SecretsProperties secretsProperties) {
+        this.secretsProperties = secretsProperties;
     }
 
     public String extractUsername(String token) {
@@ -74,7 +74,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtSecretProperties.getSECRET());
+        byte[] keyBytes = Decoders.BASE64.decode(secretsProperties.getSECRET());
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
