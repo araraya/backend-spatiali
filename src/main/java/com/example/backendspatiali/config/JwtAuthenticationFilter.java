@@ -1,6 +1,9 @@
 package com.example.backendspatiali.config;
 
 
+import com.example.backendspatiali.authentication.controller.AuthenticationController;
+import com.example.backendspatiali.authentication.data.LoginRequest;
+import com.example.backendspatiali.refreshToken.service.RefreshTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,18 +36,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
-        final String refreshHeader = request.getHeader("refreshToken");
         final String jwt;
         final String username;
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request, response);
             return;
         }
+
+
         jwt = authHeader.substring(7);
         username = jwtService.extractUsername(jwt);
+
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if(jwtService.isTokenValid(jwt, userDetails)){
+                handleIfJWTValid(userDetails, request);
+
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -56,9 +63,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-
             }
         }
         filterChain.doFilter(request, response);
     }
+
+    public void handleIfJWTValid(UserDetails userDetails, HttpServletRequest request){
+
+    }
+
 }

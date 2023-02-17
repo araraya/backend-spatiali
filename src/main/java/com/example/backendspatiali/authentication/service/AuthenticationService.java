@@ -5,6 +5,8 @@ import com.example.backendspatiali.authentication.data.AuthenticationResponse;
 import com.example.backendspatiali.authentication.data.LoginRequest;
 import com.example.backendspatiali.authentication.data.RegisterRequest;
 import com.example.backendspatiali.config.JwtService;
+import com.example.backendspatiali.refreshToken.repository.RefreshTokenRepository;
+import com.example.backendspatiali.refreshToken.service.RefreshTokenService;
 import com.example.backendspatiali.user.data.Role;
 import com.example.backendspatiali.user.data.User;
 import com.example.backendspatiali.user.repository.UserRepository;
@@ -22,6 +24,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private  final RefreshTokenService refreshTokenService;
 
 
     public AuthenticationResponse register(RegisterRequest request) {
@@ -33,6 +36,8 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        refreshTokenService.generateNewRefreshToken(user.getUsername());
+
         return AuthenticationResponse.builder()
                 .status("Register Success")
                 .token(jwtToken)
@@ -48,6 +53,8 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        refreshTokenService.generateNewRefreshToken(user.getUsername());
+
         return AuthenticationResponse.builder()
                 .status("Register Admin Success")
                 .token(jwtToken)
@@ -65,9 +72,11 @@ public class AuthenticationService {
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(user);
+
         return AuthenticationResponse.builder()
                 .status("Login success")
                 .token(jwtToken)
                 .build();
     }
+
 }
