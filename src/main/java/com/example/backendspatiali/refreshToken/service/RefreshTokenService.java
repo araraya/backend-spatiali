@@ -23,8 +23,9 @@ public class RefreshTokenService {
     }
 
     public Boolean gotRefreshToken(String username){
-        RefreshToken refreshToken = refreshTokenRepository.findByUsername(username).orElseThrow();
-        if(refreshToken != null){
+        Optional<RefreshToken> refreshToken = refreshTokenRepository.findByUsername(username);
+        System.out.println(refreshToken);
+        if(refreshToken.isPresent()){
             return true;
         } else {
            return false;

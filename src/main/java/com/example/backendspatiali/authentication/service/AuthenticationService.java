@@ -17,6 +17,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -73,7 +75,11 @@ public class AuthenticationService {
                 .orElseThrow();
 
         var jwtToken = jwtService.generateToken(user);
-        refreshTokenService.generateNewRefreshToken(user.getUsername());
+        boolean checkRefreshToken = refreshTokenService.gotRefreshToken(request.getUsername());
+        System.out.println(checkRefreshToken);
+        if(!checkRefreshToken){
+            refreshTokenService.generateNewRefreshToken(user.getUsername());
+        }
 
         return AuthenticationResponse.builder()
                 .status("Login success")
@@ -96,5 +102,10 @@ public class AuthenticationService {
                     .status("Failed to generate new JWT")
                     .build();
         }
+    }
+
+    public void logout(UUID userId) {
+        var user = userRepository.findById(userId).orElseThrow();
+        refreshTokenService.deleteRefreshToken(user.getUsername());
     }
 }

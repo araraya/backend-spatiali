@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
@@ -64,5 +65,10 @@ public class AuthenticationController {
     @GetMapping("/generateNewToken")
     public ResponseEntity<AuthenticationResponse> generateNewToken(@RequestBody LoginRequest request){
         return ResponseEntity.ok(authenticationService.generateNewToken(request));
+    }
+
+    @PostMapping("/logout/{userId}")
+    public void logout(@PathVariable("userId") UUID userId){
+        authenticationService.logout(userId);
     }
 }

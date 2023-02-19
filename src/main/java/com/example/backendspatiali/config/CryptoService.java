@@ -24,7 +24,9 @@ public class CryptoService {
             key = sha.digest(key);
             key = Arrays.copyOf(key, 16);
             secretKey = new SecretKeySpec(key, ALGORITHM);
-//            System.out.println(secretKey.getEncoded().toString());
+
+            var secretKeyToString = Base64.getEncoder().encodeToString(secretKey.getEncoded());
+            System.out.println(secretKeyToString);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

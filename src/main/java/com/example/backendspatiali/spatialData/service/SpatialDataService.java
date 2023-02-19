@@ -40,7 +40,9 @@ public class SpatialDataService {
             var spatialData = UserSpatialResponse.builder()
                     .type("Feature")
                     .properties(cryptoService.encrypt(s.getProperties(), secretsProperties.getENCRYPTION()))
+
                     .geometry(cryptoService.encrypt(s.getGeometry(), secretsProperties.getENCRYPTION()))
+
                     .build();
             UserSpatialResponses.add(spatialData);
         });
