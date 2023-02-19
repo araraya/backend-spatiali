@@ -28,6 +28,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private  final RefreshTokenService refreshTokenService;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
     public AuthenticationResponse register(RegisterRequest request) {
@@ -104,8 +105,11 @@ public class AuthenticationService {
         }
     }
 
-    public void logout(UUID userId) {
-        var user = userRepository.findById(userId).orElseThrow();
-        refreshTokenService.deleteRefreshToken(user.getUsername());
+    public void logout(String username) {
+        var userRefreshToken = refreshTokenRepository.findByUsername(username);
+        if(userRefreshToken.isPresent()){
+            refreshTokenService.deleteRefreshToken(username);
+        }
+
     }
 }

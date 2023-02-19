@@ -67,8 +67,8 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.generateNewToken(request));
     }
 
-    @PostMapping("/logout/{userId}")
-    public void logout(@PathVariable("userId") UUID userId){
-        authenticationService.logout(userId);
+    @PostMapping("/logout/{username}")
+    public void logout(@PathVariable("username") String username){
+        authenticationService.logout(username);
     }
 }
