@@ -4,17 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.wololo.geojson.Geometry;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomFeatureCollection {
-    private String type;
-    private Long featureCollectionId;
-    private UUID userId;
-    private List<CustomGeojsonFeature> features;
+public class CustomGeojsonFeatureReq {
+    private Long featureId;
+    private Map<String, Object> properties;
+    private Geometry geometry;
 }

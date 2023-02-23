@@ -24,7 +24,10 @@ public interface SpatialDataRepository extends JpaRepository<SpatialData, Long> 
 
     @Transactional
     @Modifying(clearAutomatically = true)
-    @Query(value = "SELECT type as type, properties as properties, ST_AsGeoJSON(geometry) as geometry FROM spatial_data WHERE user_id=?1", nativeQuery = true)
+    @Query(value = "SELECT type as type, " +
+            "properties as properties, " +
+            "ST_AsGeoJSON(geometry) as geometry " +
+            "FROM spatial_data WHERE user_id=?1", nativeQuery = true)
     List<ResponseProjection> getUserSpatialData(UUID userId);
 
     @Transactional
