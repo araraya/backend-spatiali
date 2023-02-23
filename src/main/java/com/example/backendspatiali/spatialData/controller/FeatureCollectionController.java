@@ -25,4 +25,9 @@ public class FeatureCollectionController {
     public List<CustomFeatureCollectionRes> getUserFeatureCollection(@PathVariable("userId") UUID userId){
         return service.getUserFeatureCollection(userId);
     }
+
+    @DeleteMapping("/deleteFeatureCollection/{FeatureCollectionId}")
+    public void deleteFeatureCollection(@PathVariable("FeatureCollectionId") Long featureCollectionId){
+        service.deleteFeatureCollection(featureCollectionId);
+    }
 }

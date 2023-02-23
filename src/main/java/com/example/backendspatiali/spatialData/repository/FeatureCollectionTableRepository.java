@@ -28,4 +28,10 @@ public interface FeatureCollectionTableRepository extends JpaRepository<FeatureC
             "ST_AsGeoJSON(geometry) as geometry " +
             "FROM spatial_data_feature_collection WHERE user_id=?1", nativeQuery = true)
     List<FeatureCollectionResponseProjection> getFeatureCollectionByUser(UUID userId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM spatial_data_feature_collection WHERE " +
+            "feature_collection_id=?1", nativeQuery = true)
+    void deleteFeatureCollection(Long featureCollectionId);
 }

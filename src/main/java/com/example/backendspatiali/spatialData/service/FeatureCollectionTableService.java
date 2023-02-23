@@ -75,4 +75,8 @@ public class FeatureCollectionTableService {
 
         return processedFeatureCollectionResponse;
     }
+
+    public void deleteFeatureCollection(Long featureCollectionId) {
+        repository.deleteFeatureCollection(featureCollectionId);
+    }
 }
