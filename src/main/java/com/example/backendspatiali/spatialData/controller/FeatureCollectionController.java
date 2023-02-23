@@ -6,6 +6,7 @@ import com.example.backendspatiali.spatialData.data.CustomFeatureCollectionRes;
 import com.example.backendspatiali.spatialData.data.FeatureCollectionResponseProjection;
 import com.example.backendspatiali.spatialData.service.FeatureCollectionTableService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,17 @@ public class FeatureCollectionController {
     }
 
     @DeleteMapping("/deleteFeatureCollection/{FeatureCollectionId}")
-    public void deleteFeatureCollection(@PathVariable("FeatureCollectionId") Long featureCollectionId){
+    public ResponseEntity<String> deleteFeatureCollection(@PathVariable("FeatureCollectionId") Long featureCollectionId){
         service.deleteFeatureCollection(featureCollectionId);
+        return ResponseEntity.ok("feature collection deleted");
     }
+
+    @PutMapping("/updateFeatureCollection/{FeatureCollectionId}")
+    public ResponseEntity<String> updateFeatureCollection(
+            @PathVariable("FeatureCollectionId") Long featureCollectionId,
+            @RequestBody CustomFeatureCollectionReq featureCollection){
+        service.updateFeatureCollection(featureCollectionId,featureCollection);
+                return ResponseEntity.ok("feature collection updated");
+    }
+
 }

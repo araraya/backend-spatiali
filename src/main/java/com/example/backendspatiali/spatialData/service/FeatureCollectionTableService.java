@@ -79,4 +79,9 @@ public class FeatureCollectionTableService {
     public void deleteFeatureCollection(Long featureCollectionId) {
         repository.deleteFeatureCollection(featureCollectionId);
     }
+
+    public void updateFeatureCollection(Long featureCollectionId, CustomFeatureCollectionReq featureCollection) {
+        deleteFeatureCollection(featureCollectionId);
+        addFeatureCollection(featureCollection);
+    }
 }
