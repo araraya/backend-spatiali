@@ -5,6 +5,7 @@ import com.example.backendspatiali.authentication.data.AuthenticationResponse;
 import com.example.backendspatiali.authentication.data.LoginRequest;
 import com.example.backendspatiali.authentication.data.RegisterRequest;
 import com.example.backendspatiali.config.JwtService;
+import com.example.backendspatiali.email.EmailService;
 import com.example.backendspatiali.refreshToken.repository.RefreshTokenRepository;
 import com.example.backendspatiali.refreshToken.service.RefreshTokenService;
 import com.example.backendspatiali.user.data.Role;
@@ -29,6 +30,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private  final RefreshTokenService refreshTokenService;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final EmailService emailService;
 
 
     public AuthenticationResponse register(RegisterRequest request) {
@@ -41,7 +43,7 @@ public class AuthenticationService {
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         refreshTokenService.generateNewRefreshToken(user.getUsername());
-
+        emailService.sendMail(request.getEmail(), "COBAIN", "COBAIN");
         return AuthenticationResponse.builder()
                 .status("Register Success")
                 .token(jwtToken)
