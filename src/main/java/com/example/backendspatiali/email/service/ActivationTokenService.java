@@ -27,19 +27,21 @@ public class ActivationTokenService {
     }
 
 
-    public ResponseEntity<?> activateUser(String email){
+    public boolean activateUser(String email){
         var token = activationTokenRepository.findByEmail(email);
-        if(token.isPresent()){
+        if(token != null){
             User activatingUser = userRepository.findByEmail(email);
+
             if(activatingUser != null){
                 activatingUser.setActivate(true);
                 userRepository.save(activatingUser);
-                return ResponseEntity.ok("User Activated");
+                activationTokenRepository.deleteById(token.getTokenId());
+                return true;
             } else {
-                return   ResponseEntity.badRequest().body("Activation Failed");
+                return false;
             }
         } else {
-          return   ResponseEntity.badRequest().body("Activation Failed");
+          return false;
         }
     }
 }
