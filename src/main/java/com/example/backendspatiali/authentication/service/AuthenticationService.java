@@ -35,7 +35,7 @@ public class AuthenticationService {
 
 
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public String register(RegisterRequest request) {
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -45,17 +45,13 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        refreshTokenService.generateNewRefreshToken(user.getUsername());
         activationTokenService.generateActivationToken(user.getEmail());
         emailService.sendMail(request.getEmail());
 
-        return AuthenticationResponse.builder()
-                .status("Register Success")
-                .token(jwtToken)
-                .build();
+        return "Register Succes, check your email to activate account";
     }
 
-    public AuthenticationResponse registerAdmin(RegisterRequest request) {
+    public String registerAdmin(RegisterRequest request) {
         var user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
@@ -65,14 +61,10 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        refreshTokenService.generateNewRefreshToken(user.getUsername());
         activationTokenService.generateActivationToken(user.getEmail());
         emailService.sendMail(request.getEmail());
 
-        return AuthenticationResponse.builder()
-                .status("Register Admin Success")
-                .token(jwtToken)
-                .build();
+        return "Register Succes, check your email to activate account";
     }
 
     public AuthenticationResponse login(LoginRequest request) {

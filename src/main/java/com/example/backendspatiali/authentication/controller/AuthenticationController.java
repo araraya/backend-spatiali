@@ -22,35 +22,27 @@ public class AuthenticationController {
     private final UserRepository userRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
+    public ResponseEntity<String> register(
             @RequestBody RegisterRequest request
     ){
         Optional<User> user = userRepository.findByUsername(request.getUsername());
         if(user.isEmpty()){
             return ResponseEntity.ok(authenticationService.register(request));
         } else {
-            final AuthenticationResponse response = AuthenticationResponse.builder()
-                    .status("Error, User already exist")
-                    .token("null")
-                    .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok("Error, User already exist");
         }
 
     }
 
     @PostMapping("/registerAdmin")
-    public ResponseEntity<AuthenticationResponse> registerAdmin(
+    public ResponseEntity<String> registerAdmin(
             @RequestBody RegisterRequest request
     ){
         Optional<User> user = userRepository.findByUsername(request.getUsername());
         if(user.isEmpty()){
             return ResponseEntity.ok(authenticationService.registerAdmin(request));
         } else {
-            final AuthenticationResponse response = AuthenticationResponse.builder()
-                    .status("Error, Username already exist")
-                    .token("null")
-                    .build();
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok("Error, Username already exist");
         }
 
     }
