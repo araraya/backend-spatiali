@@ -1,4 +1,4 @@
-package com.example.backendspatiali.email;
+package com.example.backendspatiali.email.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,13 +10,16 @@ public class EmailService {
     @Autowired
     JavaMailSender javaMailSender;
 
-    public void sendMail(String emailAddress, String title, String massage){
+    public void sendMail(String emailAddress){
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom("noreply-raymaps@gmail.com");
         simpleMailMessage.setTo(emailAddress);
-        simpleMailMessage.setSubject(title);
-        simpleMailMessage.setText(massage);
+        simpleMailMessage.setSubject("Activate Your Account");
+        simpleMailMessage.setText(
+                "Please click here to confirm your account: "+
+                        "http://localhost:8080/activate-account?email="+ emailAddress
+        );
 
         javaMailSender.send(simpleMailMessage);
     }

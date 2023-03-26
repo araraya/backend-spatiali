@@ -5,20 +5,20 @@ import com.example.backendspatiali.authentication.data.AuthenticationResponse;
 import com.example.backendspatiali.authentication.data.LoginRequest;
 import com.example.backendspatiali.authentication.data.RegisterRequest;
 import com.example.backendspatiali.config.JwtService;
-import com.example.backendspatiali.email.EmailService;
+import com.example.backendspatiali.email.model.ActivationToken;
+import com.example.backendspatiali.email.repository.ActivationTokenRepository;
+import com.example.backendspatiali.email.service.ActivationTokenService;
+import com.example.backendspatiali.email.service.EmailService;
 import com.example.backendspatiali.refreshToken.repository.RefreshTokenRepository;
 import com.example.backendspatiali.refreshToken.service.RefreshTokenService;
 import com.example.backendspatiali.user.data.Role;
 import com.example.backendspatiali.user.data.User;
 import com.example.backendspatiali.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +31,8 @@ public class AuthenticationService {
     private  final RefreshTokenService refreshTokenService;
     private final RefreshTokenRepository refreshTokenRepository;
     private final EmailService emailService;
+    private final ActivationTokenService activationTokenService;
+
 
 
     public AuthenticationResponse register(RegisterRequest request) {
@@ -38,12 +40,15 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .activate(false)
                 .role(Role.USER)
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         refreshTokenService.generateNewRefreshToken(user.getUsername());
-        emailService.sendMail(request.getEmail(), "COBAIN", "COBAIN");
+        activationTokenService.generateActivationToken(user.getEmail());
+        emailService.sendMail(request.getEmail());
+
         return AuthenticationResponse.builder()
                 .status("Register Success")
                 .token(jwtToken)
@@ -55,11 +60,14 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .activate(false)
                 .role(Role.ADMIN)
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         refreshTokenService.generateNewRefreshToken(user.getUsername());
+        activationTokenService.generateActivationToken(user.getEmail());
+        emailService.sendMail(request.getEmail());
 
         return AuthenticationResponse.builder()
                 .status("Register Admin Success")

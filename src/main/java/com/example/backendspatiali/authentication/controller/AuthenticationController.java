@@ -26,7 +26,7 @@ public class AuthenticationController {
             @RequestBody RegisterRequest request
     ){
         Optional<User> user = userRepository.findByUsername(request.getUsername());
-        if(user.toString() == "Optional.empty"){
+        if(user.isEmpty()){
             return ResponseEntity.ok(authenticationService.register(request));
         } else {
             final AuthenticationResponse response = AuthenticationResponse.builder()
@@ -43,7 +43,7 @@ public class AuthenticationController {
             @RequestBody RegisterRequest request
     ){
         Optional<User> user = userRepository.findByUsername(request.getUsername());
-        if(user.toString() == "Optional.empty"){
+        if(user.isEmpty()){
             return ResponseEntity.ok(authenticationService.registerAdmin(request));
         } else {
             final AuthenticationResponse response = AuthenticationResponse.builder()
